@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/veiculos
+    username: ${SPRING_DATASOURCE_USERNAME:fiap}
+    password: ${SPRING_DATASOURCE_PASSWORD:123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+server:
+  port: 8081
