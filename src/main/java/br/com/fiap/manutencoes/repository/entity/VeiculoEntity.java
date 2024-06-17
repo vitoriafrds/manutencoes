@@ -16,35 +16,36 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "VEICULO")
 public class VeiculoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "MODELO")
+    @Column(name = "modelo")
     private String modelo;
 
-    @Column(name = "COR")
+    @Column(name = "cor")
     private String cor;
 
-    @Column(name = "ANO_MODELO")
+    @Column(name = "ano_modelo")
     private String anoModelo;
 
-    @Column(name = "ANO_FABRICACAO")
+    @Column(name = "ano_fabricacao")
     private String anoFabricacao;
 
-    @Column(name = "TIPO_COMBUSTIVEL")
+    @Column(name = "tipo_combustivel")
     private String tipoCombustivel;
 
-    @Column(name = "PLACA")
+    @Column(name = "placa")
     private String placa;
 
-    @Column(name = "CODIGO_CHASSI")
+    @Column(name = "codigo_chassi")
     private String chassi;
 
-    @Column(name = "CODIGO_RENAVAM")
+    @Column(name = "codigo_renavam")
     private String renavam;
 
-    @Column(name = "QUILOMETRAGEM")
+    @Column(name = "quilometragem")
     private String quilometragem;
 
     @OneToMany(mappedBy = "veiculo")

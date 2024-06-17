@@ -6,19 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "SERVICO")
-public class ServicoEntity {
+@Table(name = "TIPO_MANUTENCAO")
+public class TipoManutencao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "TIPO")
+    @Column(name = "tipo")
     private String tipo;
+
+    public TipoManutencao(int id) {
+        this.id = id;
+    }
 }

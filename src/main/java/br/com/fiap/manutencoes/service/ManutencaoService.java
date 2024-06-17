@@ -1,17 +1,15 @@
 package br.com.fiap.manutencoes.service;
 
-import br.com.fiap.manutencoes.model.Manutencao;
+import br.com.fiap.manutencoes.model.request.ManutencaoRequest;
 import br.com.fiap.manutencoes.repository.ManutencaoRepository;
 import br.com.fiap.manutencoes.repository.entity.ComponenteEntity;
 import br.com.fiap.manutencoes.repository.entity.ManutencaoEntity;
-import br.com.fiap.manutencoes.repository.entity.ServicoEntity;
+import br.com.fiap.manutencoes.repository.entity.TipoManutencao;
 import br.com.fiap.manutencoes.repository.entity.VeiculoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ManutencaoService {
@@ -22,26 +20,18 @@ public class ManutencaoService {
         this.repository = repository;
     }
 
-    public void registrar(Manutencao manutencao) {
-        ManutencaoEntity entity = new ManutencaoEntity();
-        entity.setDataHora(LocalDateTime.now());
-        entity.setVeiculo(new VeiculoEntity(manutencao.getIdVeiculo()));
+    public void registrar(ManutencaoRequest manutencao) {
+        String veiculo = manutencao.getIdVeiculo();
 
-        ServicoEntity servicoEntity = new ServicoEntity();
-        servicoEntity.setId(manutencao.getServico().getId());
-        entity.setServico(servicoEntity);
+        manutencao.getManutencoes().forEach(m -> {
+            ManutencaoEntity entity = new ManutencaoEntity();
+            entity.setQuilometragemAtual(manutencao.getQuilometragem());
+            entity.setDataHora(LocalDateTime.now());
+            entity.setVeiculo(new VeiculoEntity(veiculo));
+            entity.setComponente(new ComponenteEntity(m.getComponente()));
+            entity.setTipoManutencao(new TipoManutencao(m.getTipo()));
 
-        entity.setComponentes(manutencao.getServico().getComponentes().stream().map(id -> {
-            ComponenteEntity componente = new ComponenteEntity();
-            componente.setId(id);
-
-            return componente;
-        }).collect(Collectors.toList()));
-
-        repository.save(entity);
-    }
-
-    public Optional<ManutencaoEntity> consultar(int id) {
-        return repository.findById(id);
+            repository.save(entity);
+        });
     }
 }

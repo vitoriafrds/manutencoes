@@ -1,4 +1,4 @@
-package br.com.fiap.manutencoes.model;
+package br.com.fiap.manutencoes.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -6,16 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Servico {
-    @JsonProperty("id")
-    private int id;
+public class TokenValidationResponse {
+    @JsonProperty("payload")
+    private Payload payload;
 
-    @JsonProperty("componentes")
-    private List<Integer> componentes;
+    @JsonProperty("valid")
+    private boolean valid;
 }

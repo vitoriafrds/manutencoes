@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -20,21 +20,21 @@ public class ManutencaoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "DATA_HORA")
+    @Column(name = "data_hora")
     private LocalDateTime dataHora;
+
+    @Column(name = "quilometragem_atual")
+    private long quilometragemAtual;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "veiculo_id", referencedColumnName = "id")
     private VeiculoEntity veiculo;
 
-    @OneToOne( cascade = CascadeType.MERGE)
-    @JoinColumn(name = "tipo_servico", referencedColumnName = "id")
-    private ServicoEntity servico;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "tipo_manutencao", referencedColumnName = "id")
+    private TipoManutencao tipoManutencao;
 
-    @ManyToMany
-    @JoinTable(
-            name = "manutencao_componentes",
-            joinColumns = @JoinColumn(name = "manutencao_id"),
-            inverseJoinColumns = @JoinColumn(name = "componente_id"))
-    private List<ComponenteEntity> componentes;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "componente_id", referencedColumnName = "id")
+    private ComponenteEntity componente;
 }

@@ -1,4 +1,4 @@
-package br.com.fiap.manutencoes.model;
+package br.com.fiap.manutencoes.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,10 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Manutencao {
-    @JsonProperty("tipo_manutencao")
-    private int tipo;
-
-    @JsonProperty("componente")
-    private int componente;
+public class TokenValidationRequest {
+    @JsonProperty("token")
+    private String token;
 }
