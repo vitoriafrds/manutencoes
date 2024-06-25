@@ -10,14 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class ManutencaoService {
     private ManutencaoRepository repository;
+    private VeiculoService veiculoService;
 
     @Autowired
-    public ManutencaoService(ManutencaoRepository repository) {
+    public ManutencaoService(ManutencaoRepository repository, VeiculoService service) {
         this.repository = repository;
+        this.veiculoService = service;
     }
 
     public void registrar(ManutencaoRequest manutencao) {
@@ -28,10 +31,14 @@ public class ManutencaoService {
             entity.setQuilometragemAtual(manutencao.getQuilometragem());
             entity.setDataHora(LocalDateTime.now());
             entity.setVeiculo(new VeiculoEntity(veiculo));
-            entity.setComponente(new ComponenteEntity(m.getComponente()));
             entity.setTipoManutencao(new TipoManutencao(m.getTipo()));
+            entity.setComponente(new ComponenteEntity(m.getComponente()));
 
             repository.save(entity);
         });
+
+        veiculoService.atualizarQuilometragem(UUID.fromString(manutencao.getIdVeiculo()),
+                manutencao.getQuilometragem());
+
     }
 }

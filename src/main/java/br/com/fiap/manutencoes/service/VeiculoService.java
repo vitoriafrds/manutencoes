@@ -7,6 +7,7 @@ import br.com.fiap.manutencoes.repository.entity.VeiculoEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -45,5 +46,10 @@ public class VeiculoService {
         }
 
         return Optional.empty();
+    }
+
+    @Transactional
+    public void atualizarQuilometragem(UUID id, long quilometragem) {
+        this.repository.atualizarQuilometragem(id, quilometragem);
     }
 }
